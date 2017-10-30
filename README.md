@@ -22,6 +22,9 @@ LDAP Integration Services for UliCMS
 2. Upload ldap_login-{version number}.sin
 3. Click install
 
+**Note:**
+Installation will disable "password reset" feature.
+
 ### Configuration
 Copy this code snippet to `cms-config.php` and adjust the configuration. Explanations about the Configuration parameters are located in the next chapter.
 
