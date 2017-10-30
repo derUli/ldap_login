@@ -1,13 +1,12 @@
 # ldap_login
 LDAP Integration Services for UliCMS
 
-## Description
+## Features
 * Login with your LDAP Account
 * Synchronize Passwords between UliCMS and LDAP Directory
 * Create accounts if not exists and import user data such as Firstname, Lastname, and E-Mail Address
 * Easy configuration
 * Pseudo Load-Balancing if multiple LDAP hosts are specified
-* Tested only with OpenLDAP but should work with every LDAP v3 database.
 * Secure TLS connections supported
 
 ## Installation and Configuration
@@ -15,7 +14,7 @@ LDAP Integration Services for UliCMS
 
 * UliCMS 2017.4 or newer
 * PHP with ldap extension
-* LDAP Directory Server (Tested only with OpenLDAP but also other LDAP servers should work)
+* LDAP Directory Server (Tested only with OpenLDAP but  other LDAP servers should also work)
 * Basic LDAP knowledge is required
 
 ### Installation
