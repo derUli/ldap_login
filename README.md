@@ -12,9 +12,11 @@ LDAP Integration Services for UliCMS
 
 ## Installation and Configuration
 ### Requirements
+
 * UliCMS 2017.4 or newer
 * PHP with ldap extension
 * LDAP Directory Server (Tested only with OpenLDAP but also other LDAP servers should work)
+* Basic LDAP knowledge is required
 
 ### Installation
 1. In UliCMS `Packages`> `Install package`
@@ -51,9 +53,27 @@ var $ldap_config = array (
 
 ```
 #### Configuration parameters
+`ldap_host` LDAP server hostname or ip address
+String or an array of strings.
+If multiple LDAP hosts are specified ldap_login will perform pseudo load-balancing by selecting a random host from list.
 
-Coming Soon
-
+`port` LDAP Server Port
+`use_tls` Use a secure connection
+`domain` Name of the Domain
+`user_dn` dn for user login
+Placeholders `%user%` and `%domain%` may be used.
+`filter_dn` dn for querying an user by an unique identifier
+`field_mapping` Mapping of UliCMS user fields to LDAP fields
+`password_field` Name of the field containing the user password
+`create_user` Should ldap_login create an user, if it doesn't exist in UliCMS?
+`sync_data` Should ldap_login synchronize user data with LDAP?
+`sync_passwords` Should ldap_login synchronize user passwords with LDAP?
+`validate_certificate` should php-ldap validate a certificate when using a secure connection?
+Set this to `false` if you have issues establishing a secure connection.
+## Limitations
+* Password synchronization when changing another users password is not supported
+* Passwort synchronization on `Reset Password` is not supported
+* Data synchronization is only one direction (LDAP -> UliCMS)
 ## Troubleshooting
 If you can't login to your website
 * Delete "ldap_login" module folder
