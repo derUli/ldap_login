@@ -22,7 +22,7 @@ class LDAPAuthenticator {
 		$use_tls = (isset ( $this->cfg ["use_tls"] ) && $this->cfg ["use_tls"]);
 		
 		if ($use_tls) {
-			$port = LDAP_DEFAULT_SSL_PORT;
+			$port = LDAP_DEFAULT_TLS_PORT;
 			$protocol = "ldaps://";
 		}
 		
