@@ -10,6 +10,7 @@ $ldap_config = array(
     "domain" => "firma.de",
     "user_dn" => "uid=%user%,dc=%domain%",
     "filter_dn" => "(uid=%user%)",
+	"search_dn" => "cn=users,dc=firma,dc=de",
     "require_group" => "WebsiteManager", // users must be member of this LDAP group to be able to login
     "field_mapping" => [
         "username" => "uid",
