@@ -51,8 +51,11 @@ var $ldap_config = array(
     "create_user" => true, // create a new user if it doesn't exists
     "sync_data" => true, // Update user data from ldap on login
     "sync_passwords" => true, // Synchronize passwords
-    "validate_certificate" => true // if this is false LDAPTLS_REQCERT=never will be set.
+    "validate_certificate", => true // if this is false LDAPTLS_REQCERT=never will be set.
+    "skip_on_error" => true // try to login with standard UliCMS login if LDAP Login fails
+    
 );
+
 ```
 
 #### Configuration parameters
@@ -87,6 +90,9 @@ Placeholders `%user%` and `%domain%` may be used.
 `validate_certificate` should php-ldap validate a certificate when using a secure connection?
 
 Set this to `false` if you have issues establishing a secure connection.
+
+`skip_on_error` Should ldap_login fallback to UliCMS default login procedure, if LDAP Login fails? (Wrong password or LDAP server unavailable)
+
 
 ## Limitations
 * Password synchronization when changing another users password is not supported

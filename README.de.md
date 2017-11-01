@@ -50,7 +50,9 @@ var $ldap_config = array(
     "create_user" => true, // create a new user if it doesn't exists
     "sync_data" => true, // Update user data from ldap on login
     "sync_passwords" => true, // Synchronize passwords
-    "validate_certificate" => true // if this is false LDAPTLS_REQCERT=never will be set.
+    "validate_certificate" => true, // if this is false LDAPTLS_REQCERT=never will be set.
+    "skip_on_error" => true // try to login with standard UliCMS login if LDAP Login fails
+    
 );
 ```
 
@@ -86,6 +88,9 @@ Die Platzhalter `%user%` und `%domain%` dürfen genutzt werden.
 `validate_certificate` Soll php-ldap das Zertifikat validieren bei Nutzung einer verschlüsselten Verbindung?
 
 Setzen Sie diesen Parameter auf `false` wenn es Probleme beim Aufbau einer verschlüsselten Verbindung gibt.
+
+`skip_on_error` Soll wenn der Login per LDAP fehlschlägt, ein Fallback auf die Standard Login Funktion von UliCMS erfolgen? (Falsches Passwort oder LDAP Server nicht erreichbar)
+
 
 ## Limitations
 * Beim Ändern des Passworts eines anderen Benutzers in UliCMS erfolgt keine Synchronisation des Passworts.
