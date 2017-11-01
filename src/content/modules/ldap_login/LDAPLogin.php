@@ -11,11 +11,11 @@ class LDAPLogin extends Controller {
 		if ($authenticator->connect ()) {
 			if ($authenticator->login ( $_POST ["user"], $_POST ["password"] )) {
 				$user = getUserByName ( $_POST ["user"] );
-				
+
 				$username = $_POST ["user"];
 				$fieldMapping = $this->getFieldMapping ();
 				$userData = $authenticator->getUserData ( $username, array_values ( $fieldMapping ) );
-				
+
 				$lastname = $cfg ["default_lastname"] ?? "Doe";
 				$firstname = $cfg ["default_firstname"] ?? "John";
 				$email = $_POST ["user"] . "@" . $cfg ["domain"];
@@ -39,7 +39,7 @@ class LDAPLogin extends Controller {
 					$user->setEmail ( $email );
 					$user->save ();
 				}
-				
+
 				$user = getUserByName ( $_POST ["user"] );
 				$sessionData = $user;
 				// save original ldap to have it for login on password change.
@@ -56,7 +56,7 @@ class LDAPLogin extends Controller {
 				}
 			} else {
 				$error = $authenticator->getError ();
-				
+
 				// show own error messages for ldap errors
 				switch (strtolower ( $error )) {
 					case "invalid credentials" :
@@ -101,11 +101,12 @@ class LDAPLogin extends Controller {
 		}
 	}
 	private function getFieldMapping() {
-		$fieldMapping = isset ( $this->cfg ["field_mapping"] ) ? $this->cfg ["field_mapping"] : array (
+		$cfg = $this->getConfig();
+		$fieldMapping = ($cfg and isset ( $cfg ["field_mapping"] )) ? $cfg ["field_mapping"] : array (
 				"username" => "uid",
 				"firstname" => "givenname",
 				"lastname" => "sn",
-				"email" => "mail" 
+				"email" => "mail"
 		);
 		return $fieldMapping;
 	}
