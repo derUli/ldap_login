@@ -10,7 +10,8 @@ class LDAPLogin extends Controller
             return $sessionData;
         }
         $cfg = $this->getConfig();
-        if (! (isset($cfg["skip_on_error"]) and $cfg["skip_on_error"])) {
+        $skip_on_error = (isset($cfg["skip_on_error"]) and $cfg["skip_on_error"]);
+        if (! $skip_on_error) {
             $sessionData = false;
         }
         $authenticator = new LDAPAuthenticator($this->getConfig());
@@ -62,8 +63,8 @@ class LDAPLogin extends Controller
                     $user->getPassword();
                 }
             } else {
-                if ($sessionData) {
-                    return $sessionData;
+                if ($skip_on_error) {
+                    return validate_login($_POST["user"], $_POST["password"]);
                 }
                 $error = $authenticator->getError();
                 
