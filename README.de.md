@@ -12,7 +12,7 @@ LDAP Integration für UliCMS
 ## Installation and Konfiguration
 ### Requirements
 * UliCMS 2017.4 oder neuer
-* PHP mit der ldap-Erweiterung
+* PHP 7.0 oder neuer mit der ldap-Erweiterung
 * LDAP Verzeichnisdienst (getestet mit OpenLDAP, andere LDAP Server sollten ebenfalls funktionieren)
 * Grundlegende LDAP Kenntnisse werden benötigt
 
