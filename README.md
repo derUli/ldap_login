@@ -72,6 +72,8 @@ Placeholders `%user%` and `%domain%` may be used.
 
 `filter_dn` dn for querying an user by an unique identifier
 
+`search_dn` dn of a folder which is used as base for filter_dn
+
 `field_mapping` Mapping of UliCMS user fields to LDAP fields
 
 `password_field` Name of the field containing the user password
