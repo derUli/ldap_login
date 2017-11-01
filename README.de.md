@@ -71,6 +71,8 @@ Die Platzhalter `%user%` und `%domain%` dürfen genutzt werden.
 
 `filter_dn` dn um die Benutzerdaten eines Benutzers über ein eindeutiges Attribut (Benutzername) abzufragen. Der Platzhalter `%user%` kann genutzt werden.
 
+`search_dn` Ordner der als Basis für `filter_dn` verwendet wird.
+
 `field_mapping` UliCMS Datenbankfelder auf LDAP Felder mappen
 
 `password_field` Name des Feldes, welches das Passwort des Benutzers enthält
