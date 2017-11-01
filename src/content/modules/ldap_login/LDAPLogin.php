@@ -102,7 +102,7 @@ class LDAPLogin extends Controller {
 	}
 	private function getFieldMapping() {
 		$cfg = $this->getConfig();
-		$fieldMapping = ($cfg and isset ( $cfg ["field_mapping"] )) ? $this->cfg ["field_mapping"] : array (
+		$fieldMapping = ($cfg and isset ( $cfg ["field_mapping"] )) ? $cfg ["field_mapping"] : array (
 				"username" => "uid",
 				"firstname" => "givenname",
 				"lastname" => "sn",
