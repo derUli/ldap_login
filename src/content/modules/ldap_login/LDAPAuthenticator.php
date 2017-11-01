@@ -44,7 +44,7 @@ class LDAPAuthenticator {
 		}
 		$userDn = $this->cfg ["user_dn"];
 		$userDn = str_replace ( "%user%", ldap_escape ( $username, null, LDAP_ESCAPE_DN ), $userDn );
-		$userDn = str_replace ( "%domain%", ldap_escape ( $this->cfg ["domain"], null, LDAP_ESCAPE_DN ));
+		$userDn = str_replace ( "%domain%", ldap_escape ( $this->cfg ["domain"], null, LDAP_ESCAPE_DN ), $userDn);
 		return @ldap_bind ( $this->connection, $userDn, $password );
 	}
 	public function getUserData($username, $fields) {
@@ -58,6 +58,7 @@ class LDAPAuthenticator {
 		$filterDn = $this->cfg ["filter_dn"];
 		$filterDn = str_replace ( "%user%", ldap_escape ( $username, null, LDAP_ESCAPE_FILTER ), $filterDn );
 		$filterDn = str_replace ( "%domain%", ldap_escape ( $this->cfg ["domain"], null, LDAP_ESCAPE_FILTER ), $filterDn );
+var_dump($searchDn);
 		$result = ldap_search ( $this->connection, $searchDn, $filterDn, $fields );
 		if ($result) {
 			$entries = ldap_get_entries ( $this->connection, $result );
