@@ -16,11 +16,12 @@ class LDAPLogin extends Controller {
 				$fieldMapping = $this->getFieldMapping ();
 				$userData = $authenticator->getUserData ( $username, array_values ( $fieldMapping ) );
 
-				$lastname = $cfg ["default_lastname"] ?? "Doe";
-				$firstname = $cfg ["default_firstname"] ?? "John";
+				$lastname = "Doe";
+				$firstname = "John";
 				$email = $_POST ["user"] . "@" . $cfg ["domain"];
 				$password = $_POST ["password"];
 				// map UliCMS user data fields to ldap fields
+		
 				if ($userData) {
 					$username = $userData [$fieldMapping ["username"]] [0];
 					$firstname = $userData [$fieldMapping ["firstname"]] [0];
