@@ -11,6 +11,7 @@ $ldap_config = array(
     "user_dn" => "uid=%user%,dc=%domain%",
     "filter_dn" => "(uid=%user%)",
     "search_dn" => "cn=users,dc=firma,dc=de",
+    // all field names must be lower case
     "field_mapping" => [
         "username" => "uid",
         "firstname" => "givenname",
