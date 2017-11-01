@@ -29,32 +29,32 @@ Installation will disable "password reset" feature.
 Copy this code snippet to `cms-config.php` and adjust the configuration. Explanations about the Configuration parameters are located in the next chapter.
 
 ```php
-var $ldap_config = array (
-		"ldap_host" => [ 
-				"domaincontroller1.firma.de",
-				"domaincontroller2.firma.de",
-				"domaincontroller3.firma.de" 
-		],
-		"port" => 389,
-		"use_tls" => false,
-		"domain" => "firma.de",
-		"user_dn" => "uid=%user%,dc=%domain%",
-		"filter_dn" => "(uid=%user%)",
-		"search_dn" => "cn=users,dc=firma,dc=de",
-		"field_mapping" => [ 
-				"username" => "uid",
-				"firstname" => "givenname",
-				"lastname" => "sn",
-				"email" => "mail" 
-		],
-		"password_field" => "userPassword",
-		"create_user" => true, // create a new user if it doesn't exists
-		"sync_data" => true, // Update user data from ldap on login
-		"sync_passwords" => true, // Synchronize passwords
-		"validate_certificate" => true  // if this is false LDAPTLS_REQCERT=never will be set.
+var $ldap_config = array(
+    "ldap_host" => [
+        "domaincontroller1.firma.de",
+        "domaincontroller2.firma.de",
+        "domaincontroller3.firma.de"
+    ],
+    "port" => 389,
+    "use_tls" => false,
+    "domain" => "firma.de",
+    "user_dn" => "uid=%user%,dc=%domain%",
+    "filter_dn" => "(uid=%user%)",
+    "search_dn" => "cn=users,dc=firma,dc=de",
+    "field_mapping" => [
+        "username" => "uid",
+        "firstname" => "givenname",
+        "lastname" => "sn",
+        "email" => "mail"
+    ],
+    "password_field" => "userPassword",
+    "create_user" => true, // create a new user if it doesn't exists
+    "sync_data" => true, // Update user data from ldap on login
+    "sync_passwords" => true, // Synchronize passwords
+    "validate_certificate" => true // if this is false LDAPTLS_REQCERT=never will be set.
 );
-
 ```
+
 #### Configuration parameters
 `ldap_host` LDAP server hostname or ip address
 String or an array of strings.
@@ -93,7 +93,7 @@ Set this to `false` if you have issues establishing a secure connection.
 ## Troubleshooting
 If you can't login to your website
 * Delete "ldap_login" module folder
-or 
+or
 * Disable ldap_login by this SQL
 
   ```sql

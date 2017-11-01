@@ -12,7 +12,7 @@ LDAP Integration für UliCMS
 ## Installation and Konfiguration
 ### Requirements
 * UliCMS 2017.4 oder neuer
-* PHP mit der ldap-Erweiterung 
+* PHP mit der ldap-Erweiterung
 * LDAP Verzeichnisdienst (getestet mit OpenLDAP, andere LDAP Server sollten ebenfalls funktionieren)
 * Grundlegende LDAP Kenntnisse werden benötigt
 
@@ -28,31 +28,32 @@ Die Installation deaktiviert das "Passwort zurücksetzen" Feature.
 Kopieren Sie das folgende Codesnippet in die Datei `cms-config.php` und passen Sie die Konfiguration an. Eine Beschreibung der Parameter finden Sie im nächsten Abschnitt.
 
 ```php
-var $ldap_config = array (
-		"ldap_host" => [ 
-				"domaincontroller1.firma.de",
-				"domaincontroller2.firma.de",
-				"domaincontroller3.firma.de" 
-		],
-		"port" => 389,
-		"use_tls" => false,
-		"domain" => "firma.de",
-		"user_dn" => "uid=%user%,dc=%domain%",
-		"filter_dn" => "(uid=%user%)",
-		"field_mapping" => [ 
-				"username" => "uid",
-				"firstname" => "givenname",
-				"lastname" => "sn",
-				"email" => "mail" 
-		],
-		"password_field" => "userPassword",
-		"create_user" => true, // create a new user if it doesn't exists
-		"sync_data" => true, // Update user data from ldap on login
-		"sync_passwords" => true, // Synchronize passwords
-		"validate_certificate" => true  // if this is false LDAPTLS_REQCERT=never will be set.
+var $ldap_config = array(
+    "ldap_host" => [
+        "domaincontroller1.firma.de",
+        "domaincontroller2.firma.de",
+        "domaincontroller3.firma.de"
+    ],
+    "port" => 389,
+    "use_tls" => false,
+    "domain" => "firma.de",
+    "user_dn" => "uid=%user%,dc=%domain%",
+    "filter_dn" => "(uid=%user%)",
+    "search_dn" => "cn=users,dc=firma,dc=de",
+    "field_mapping" => [
+        "username" => "uid",
+        "firstname" => "givenname",
+        "lastname" => "sn",
+        "email" => "mail"
+    ],
+    "password_field" => "userPassword",
+    "create_user" => true, // create a new user if it doesn't exists
+    "sync_data" => true, // Update user data from ldap on login
+    "sync_passwords" => true, // Synchronize passwords
+    "validate_certificate" => true // if this is false LDAPTLS_REQCERT=never will be set.
 );
-
 ```
+
 #### Configuration parameters
 `ldap_host` Hostname oder IP-Adresse des LDAP Hosts
 String or an array of strings.
