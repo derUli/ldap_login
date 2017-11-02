@@ -13,10 +13,11 @@ class LDAPLogin extends Controller
         }
         $cfg = $this->getConfig();
         $skip_on_error = (isset($cfg["skip_on_error"]) and $cfg["skip_on_error"]);
-        if (! $skip_on_error) {
-            $this->debug("skip_on_error is enabled");
-            $sessionData = false;
-        }
+     	if (! $skip_on_error) {
+			$sessionData = false;
+		} else {
+			$this->debug("skip_on_error is enabled");
+		}
         $authenticator = new LDAPAuthenticator($this->getConfig(), $this);
         if ($authenticator->connect()) {
             if ($authenticator->login($_POST["user"], $_POST["password"])) {
