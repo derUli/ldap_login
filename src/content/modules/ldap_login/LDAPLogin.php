@@ -2,9 +2,9 @@
 
 class LDAPLogin extends Controller
 {
-
+    
     private $logger;
-
+    
     public function sessionDataFilter($sessionData)
     {
         // empty passwords are not supported
@@ -21,7 +21,7 @@ class LDAPLogin extends Controller
         if ($authenticator->connect()) {
             if ($authenticator->login($_POST["user"], $_POST["password"])) {
                 
-                $this->info("Authentication successfull: user: {$_POST["user"]} password: " . str_repeat("*", strlen($_POST["password"])));
+                $this->info("Authentication successful: user: {$_POST["user"]} password: " . str_repeat("*", strlen($_POST["password"])));
                 $user = getUserByName($_POST["user"]);
                 
                 $username = $_POST["user"];
@@ -55,7 +55,7 @@ class LDAPLogin extends Controller
                     $user->setLastname($lastname);
                     $user->setEmail($email);
                     $user->save();
-                    $this->debug("Sync LDAP to UliCMS {$_POST["user"]} ");
+                    $this->debug("Sync LDAP data to UliCMS User: {$_POST["user"]} ");
                 }
                 
                 $user = getUserByName($_POST["user"]);
@@ -102,7 +102,7 @@ class LDAPLogin extends Controller
         }
         return $sessionData;
     }
-
+    
     public function beforeInit()
     {
         $cfg = $this->getConfig();
@@ -121,28 +121,28 @@ class LDAPLogin extends Controller
             putenv('LDAPTLS_REQCERT=never');
         }
     }
-
+    
     public function debug($message, $context = array())
     {
         if ($this->logger) {
             $this->logger->debug($message, $context);
         }
     }
-
+    
     public function info($message, $context = array())
     {
         if ($this->logger) {
             $this->logger->info($message, $context);
         }
     }
-
+    
     public function error($message, $context = array())
     {
         if ($this->logger) {
             $this->logger->error($message, $context);
         }
     }
-
+    
     public function afterEditUser()
     {
         $cfg = $this->getConfig();
@@ -166,7 +166,7 @@ class LDAPLogin extends Controller
             }
         }
     }
-
+    
     private function getFieldMapping()
     {
         $cfg = $this->getConfig();
@@ -178,7 +178,7 @@ class LDAPLogin extends Controller
         );
         return $fieldMapping;
     }
-
+    
     private function getConfig()
     {
         $cfg = new config();
