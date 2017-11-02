@@ -116,21 +116,21 @@ class LDAPLogin extends Controller
         }
     }
 
-    public function debug($message, $context = null)
+    public function debug($message, $context = array())
     {
         if ($this->logger) {
             $this->logger->debug($message, $context);
         }
     }
 
-    public function info($message, $context = null)
+    public function info($message, $context = array())
     {
         if ($this->logger) {
-            $this->logger->info($message, $context);
+            $this->logger->info($message, $context = array());
         }
     }
 
-    public function error($message, $context = null)
+    public function error($message, $context = array())
     {
         if ($this->logger) {
             $this->logger->error($message, $context);
