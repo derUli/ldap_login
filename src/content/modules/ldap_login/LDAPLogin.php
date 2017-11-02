@@ -77,7 +77,13 @@ class LDAPLogin extends Controller
                 
                 if ($skip_on_error) {
                     $this->debug("Try UliCMS Login");
-                    return validate_login($_POST["user"], $_POST["password"]);
+                    $login = validate_login($_POST["user"], $_POST["password"]);
+                    if ($login) {
+                        $this->debug("Login Successful - User: {$_POST["user"]}");
+                    } else {
+                        $this->debug("Login failed - User: {$_POST["user"]}");
+                    }
+                    return $login;
                 }
                 $error = $authenticator->getError();
                 
