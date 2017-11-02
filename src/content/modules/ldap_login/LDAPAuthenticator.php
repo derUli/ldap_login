@@ -15,7 +15,7 @@ class LDAPAuthenticator
 
     private $mainClass;
 
-    public function __construct($cfg, $mainClass = null)
+    public function __construct($cfg, $mainClass)
     {
         $this->cfg = $cfg;
         $this->mainClass = $mainClass;
@@ -80,10 +80,15 @@ class LDAPAuthenticator
         $result = null;
         $searchDn = $this->cfg["search_dn"];
         $searchDn = str_replace("%domain%", $this->cfg["domain"], $searchDn);
+		
+        $this->mainClass->debug("Search DN: $searchDn");
         
         $filterDn = $this->cfg["filter_dn"];
         $filterDn = str_replace("%user%", ldap_escape($username, null, LDAP_ESCAPE_FILTER), $filterDn);
         $filterDn = str_replace("%domain%", ldap_escape($this->cfg["domain"], null, LDAP_ESCAPE_FILTER), $filterDn);
+		
+        $this->mainClass->debug("Filter DN: $filterDn");
+		
         $result = ldap_search($this->connection, $searchDn, $filterDn, $fields);
         if ($result) {
             $entries = ldap_get_entries($this->connection, $result);
