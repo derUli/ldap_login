@@ -132,7 +132,7 @@ class LDAPLogin extends Controller
     public function info($message, $context = array())
     {
         if ($this->logger) {
-            $this->logger->info($message, $context = array());
+            $this->logger->info($message, $context);
         }
     }
 
