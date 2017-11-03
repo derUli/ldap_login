@@ -23,5 +23,6 @@ $ldap_config = array(
     "sync_data" => true, // Update user data from ldap on login
     "sync_passwords" => true, // Synchronize passwords
     "validate_certificate" => true, // if this is false LDAPTLS_REQCERT=never will be set.
-    "skip_on_error" => true // try to login with standard UliCMS login if LDAP Login fails
+    "skip_on_error" => true, // try to login with standard UliCMS login if LDAP Login fails
+    "log_enabled" => false // Should ldap_login write a log file?
 );

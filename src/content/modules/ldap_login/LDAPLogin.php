@@ -2,9 +2,28 @@
 
 class LDAPLogin extends Controller
 {
-    
+
     private $logger;
-    
+
+    public function beforeInit()
+    {
+        $cfg = $this->getConfig();
+        $logPath = Path::resolve("ULICMS_ROOT/content/log/ldap_login");
+        if (isset($cfg["log_enabled"]) and $cfg["log_enabled"]) {
+            if (! file_exists($logPath)) {
+                mkdir($logPath, null, true);
+            }
+            $this->logger = new Katzgrau\KLogger\Logger($logPath);
+        }
+        
+        // if validate_certificate is equal to false set an environment variable
+        // disable certificate validation
+        if ($cfg and $cfg["validate_certificate"] === false) {
+            $this->debug("certificate validation is disabled");
+            putenv('LDAPTLS_REQCERT=never');
+        }
+    }
+
     public function sessionDataFilter($sessionData)
     {
         // empty passwords are not supported
@@ -13,11 +32,11 @@ class LDAPLogin extends Controller
         }
         $cfg = $this->getConfig();
         $skip_on_error = (isset($cfg["skip_on_error"]) and $cfg["skip_on_error"]);
-     	if (! $skip_on_error) {
-			$sessionData = false;
-		} else {
-			$this->debug("skip_on_error is enabled");
-		}
+        if (! $skip_on_error) {
+            $sessionData = false;
+        } else {
+            $this->debug("skip_on_error is enabled");
+        }
         $authenticator = new LDAPAuthenticator($this->getConfig(), $this);
         if ($authenticator->connect()) {
             if ($authenticator->login($_POST["user"], $_POST["password"])) {
@@ -103,47 +122,28 @@ class LDAPLogin extends Controller
         }
         return $sessionData;
     }
-    
-    public function beforeInit()
-    {
-        $cfg = $this->getConfig();
-        $logPath = Path::resolve("ULICMS_ROOT/content/log/ldap_login");
-        if (isset($cfg["log_enabled"]) and $cfg["log_enabled"]) {
-            if (! file_exists($logPath)) {
-                mkdir($logPath, null, true);
-            }
-            $this->logger = new Katzgrau\KLogger\Logger($logPath);
-        }
-        
-        // if validate_certificate is equal to false set an environment variable
-        // disable certificate validation
-        if ($cfg and $cfg["validate_certificate"] === false) {
-            $this->debug("certificate validation is disabled");
-            putenv('LDAPTLS_REQCERT=never');
-        }
-    }
-    
+
     public function debug($message, $context = array())
     {
         if ($this->logger) {
             $this->logger->debug($message, $context);
         }
     }
-    
+
     public function info($message, $context = array())
     {
         if ($this->logger) {
             $this->logger->info($message, $context);
         }
     }
-    
+
     public function error($message, $context = array())
     {
         if ($this->logger) {
             $this->logger->error($message, $context);
         }
     }
-    
+
     public function afterEditUser()
     {
         $cfg = $this->getConfig();
@@ -167,7 +167,7 @@ class LDAPLogin extends Controller
             }
         }
     }
-    
+
     private function getFieldMapping()
     {
         $cfg = $this->getConfig();
@@ -179,7 +179,7 @@ class LDAPLogin extends Controller
         );
         return $fieldMapping;
     }
-    
+
     private function getConfig()
     {
         $cfg = new config();
