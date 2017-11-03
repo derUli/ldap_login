@@ -118,7 +118,7 @@ class LDAPLogin extends Controller
         // if validate_certificate is equal to false set an environment variable
         // disable certificate validation
         if ($cfg and $cfg["validate_certificate"] === false) {
-            $this->debug("certificate validation is dabled");
+            $this->debug("certificate validation is disabled");
             putenv('LDAPTLS_REQCERT=never');
         }
     }
