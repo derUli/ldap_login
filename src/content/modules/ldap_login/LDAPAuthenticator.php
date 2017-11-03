@@ -77,21 +77,22 @@ class LDAPAuthenticator
         if (! $this->connection) {
             throw new Exception("not connected to ldap");
         }
-        $result = null;
+        $entries = null;
         $searchDn = $this->cfg["search_dn"];
         $searchDn = str_replace("%domain%", $this->cfg["domain"], $searchDn);
-		
+        
         $this->mainClass->debug("Search DN: $searchDn");
         
         $filterDn = $this->cfg["filter_dn"];
         $filterDn = str_replace("%user%", ldap_escape($username, null, LDAP_ESCAPE_FILTER), $filterDn);
         $filterDn = str_replace("%domain%", ldap_escape($this->cfg["domain"], null, LDAP_ESCAPE_FILTER), $filterDn);
-		
+        
         $this->mainClass->debug("Filter DN: $filterDn");
-		
+        
         $result = ldap_search($this->connection, $searchDn, $filterDn, $fields);
         if ($result) {
             $entries = ldap_get_entries($this->connection, $result);
+            $this->mainClass->debug("User data found", $entries);
             if ($entries["count"] >= 1) {
                 $entries = $entries[0];
             }
