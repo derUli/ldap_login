@@ -15,7 +15,9 @@ LDAP Integration Services for UliCMS
 * UliCMS 2017.4 or newer
 * PHP 7.0 or newer with ldap extension
 * LDAP Directory Server (Tested only with OpenLDAP but  other LDAP servers should also work)
+* `klogger` UliCMS module
 * Basic LDAP knowledge is required
+
 
 ### Installation
 1. In UliCMS `Packages` -> `Install package`
@@ -57,7 +59,6 @@ var $ldap_config = array(
     "skip_on_error" => true, // try to login with standard UliCMS login if LDAP Login fails
     "log_enabled" => false // Should ldap_login write a log file?
 );
-
 ```
 
 #### Configuration parameters
