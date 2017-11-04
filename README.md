@@ -15,7 +15,9 @@ LDAP Integration Services for UliCMS
 * UliCMS 2017.4 or newer
 * PHP 7.0 or newer with ldap extension
 * LDAP Directory Server (Tested only with OpenLDAP but  other LDAP servers should also work)
+* `klogger` UliCMS module
 * Basic LDAP knowledge is required
+
 
 ### Installation
 1. In UliCMS `Packages` -> `Install package`
@@ -29,6 +31,7 @@ Installation will disable "password reset" feature.
 Copy this code snippet to `cms-config.php` and adjust the configuration. Explanations about the Configuration parameters are located in the next chapter.
 
 ```php
+<?php
 var $ldap_config = array(
     "ldap_host" => [
         "domaincontroller1.firma.de",
@@ -41,6 +44,7 @@ var $ldap_config = array(
     "user_dn" => "uid=%user%,dc=%domain%",
     "filter_dn" => "(uid=%user%)",
     "search_dn" => "cn=users,dc=firma,dc=de",
+    // all field names must be lower case
     "field_mapping" => [
         "username" => "uid",
         "firstname" => "givenname",
@@ -51,11 +55,10 @@ var $ldap_config = array(
     "create_user" => true, // create a new user if it doesn't exists
     "sync_data" => true, // Update user data from ldap on login
     "sync_passwords" => true, // Synchronize passwords
-    "validate_certificate", => true // if this is false LDAPTLS_REQCERT=never will be set.
-    "skip_on_error" => true // try to login with standard UliCMS login if LDAP Login fails
-    
+    "validate_certificate" => true, // if this is false LDAPTLS_REQCERT=never will be set.
+    "skip_on_error" => true, // try to login with standard UliCMS login if LDAP Login fails
+    "log_enabled" => false // Should ldap_login write a log file?
 );
-
 ```
 
 #### Configuration parameters
@@ -92,6 +95,8 @@ Placeholders `%user%` and `%domain%` may be used.
 Set this to `false` if you have issues establishing a secure connection.
 
 `skip_on_error` Should ldap_login fallback to UliCMS default login procedure, if LDAP Login fails? (Wrong password or LDAP server unavailable)
+
+`log_enabled` Should ldap_login write a log file?
 
 
 ## Limitations

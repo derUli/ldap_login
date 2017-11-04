@@ -5,5 +5,8 @@
 	"categories": [
 		"security"
 	],
-	"compatible_from": "2017.4"
+	"compatible_from": "2017.4",
+	"dependencies": [
+		"klogger"
+	]
 }

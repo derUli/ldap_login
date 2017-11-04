@@ -9,11 +9,12 @@ LDAP Integration für UliCMS
 * Pseudo Load-Balancing wenn mehrere LDAP Hosts hinterlegt sind.
 * Verschlüsselte Verbindungen per TLS werden unterstützt
 
-## Installation and Konfiguration
+## Installation und Konfiguration
 ### Requirements
 * UliCMS 2017.4 oder neuer
 * PHP 7.0 oder neuer mit der ldap-Erweiterung
 * LDAP Verzeichnisdienst (getestet mit OpenLDAP, andere LDAP Server sollten ebenfalls funktionieren)
+* `klogger` UliCMS Modul
 * Grundlegende LDAP Kenntnisse werden benötigt
 
 ### Installation
@@ -24,10 +25,11 @@ LDAP Integration für UliCMS
 **Hinweis:**
 Die Installation deaktiviert das "Passwort zurücksetzen" Feature.
 
-### Configuration
+### Konfiguration
 Kopieren Sie das folgende Codesnippet in die Datei `cms-config.php` und passen Sie die Konfiguration an. Eine Beschreibung der Parameter finden Sie im nächsten Abschnitt.
 
 ```php
+<?php
 var $ldap_config = array(
     "ldap_host" => [
         "domaincontroller1.firma.de",
@@ -40,6 +42,7 @@ var $ldap_config = array(
     "user_dn" => "uid=%user%,dc=%domain%",
     "filter_dn" => "(uid=%user%)",
     "search_dn" => "cn=users,dc=firma,dc=de",
+    // all field names must be lower case
     "field_mapping" => [
         "username" => "uid",
         "firstname" => "givenname",
@@ -51,8 +54,8 @@ var $ldap_config = array(
     "sync_data" => true, // Update user data from ldap on login
     "sync_passwords" => true, // Synchronize passwords
     "validate_certificate" => true, // if this is false LDAPTLS_REQCERT=never will be set.
-    "skip_on_error" => true // try to login with standard UliCMS login if LDAP Login fails
-    
+    "skip_on_error" => true, // try to login with standard UliCMS login if LDAP Login fails
+    "log_enabled" => false // Should ldap_login write a log file?
 );
 ```
 
@@ -91,6 +94,7 @@ Setzen Sie diesen Parameter auf `false` wenn es Probleme beim Aufbau einer versc
 
 `skip_on_error` Soll wenn der Login per LDAP fehlschlägt, ein Fallback auf die Standard Login Funktion von UliCMS erfolgen? (Falsches Passwort oder LDAP Server nicht erreichbar)
 
+`log_enabled` Sollte ldap_login eine Logdatei schreiben?
 
 ## Limitations
 * Beim Ändern des Passworts eines anderen Benutzers in UliCMS erfolgt keine Synchronisation des Passworts.
