@@ -159,11 +159,14 @@ class LDAPLogin extends Controller
         }
         $authenticator = new LDAPAuthenticator($this->getConfig(), $this);
         if ($authenticator->connect()) {
-            // FIXME: Handle Errors
             if ($authenticator->login($_POST["admin_username"], $_SESSION["original_ldap_password"])) {
                 $authenticator->changePassword($_POST["admin_username"], $_POST["admin_password"]);
                 $_SESSION["original_ldap_password"] = $_POST["admin_password"];
                 $this->debug("User changed his password");
+            } else {
+                if ($authenticator->getError()) {
+                    $this->error("LDAP Error: " . $authenticator->getError());
+                }
             }
         }
     }

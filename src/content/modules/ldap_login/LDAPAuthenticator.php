@@ -1,9 +1,5 @@
 <?php
 
-// TODO: Hier ebenfalls Logausgaben einbauen.
-// $this->mainClass->log("Message")
-// $this->mainClass->error("Message")
-// $this->mainClass->info("Message")
 class LDAPAuthenticator
 {
 
@@ -21,7 +17,6 @@ class LDAPAuthenticator
         $this->mainClass = $mainClass;
     }
 
-    // FIXME: Ports usw. zu Konstanten machen
     public function connect()
     {
         $host = $this->cfg["ldap_host"];
