@@ -101,7 +101,7 @@ Set this to `false` if you have issues establishing a secure connection.
 
 ## Limitations
 * Password synchronization when changing another users password is not supported
-* Passwort synchronization on `Reset Password` is not supported
+* Password synchronization on `Reset Password` is not supported
 * Data synchronization is only one direction (LDAP -> UliCMS)
 ## Troubleshooting
 If you can't login to your website
