@@ -1,12 +1,10 @@
 {
 	"id": "ldap_login",
-	"version": "1.3",
-	"description": "LDAP Integration for UliCMS",
+	"version": "1.4",
+	"description": "LDAP Integration Services for UliCMS",
 	"categories": [
 		"security"
 	],
-	"compatible_from": "2017.4",
-	"dependencies": [
-		"klogger"
-	]
+	"compatible_from": "2018.2",
+	"dependencies": []
 }
