@@ -104,9 +104,12 @@ class LDAPAuthenticator
         
         $passwordField = isset($this->cfg["password_field"]) ? $this->cfg["password_field"] : "userPassword";
         
+        // passwordField is "unicodePwd" on Active Directory and userPassword on most other ldap servers   
+        $hashedPassword = strtolower($passwordField) != "unicodepwd" ? LDAPUtil::hashPassword($password) : LDAPUtil::encodePasswordForActiveDirectory($password);
+        
         $this->mainClass->debug("Change password for User: $userDn");
         return ldap_mod_replace($this->connection, $userDn, array(
-            'userPassword' => LDAPUtil::hashPassword($password)
+            $passwordField => $hashedPassword
         ));
     }
 

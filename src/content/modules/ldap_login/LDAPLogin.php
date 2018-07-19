@@ -185,7 +185,7 @@ class LDAPLogin extends Controller
 
     private function getConfig()
     {
-        $cfg = new config();
+        $cfg = new CMSConfig();
         if (! isset($cfg->ldap_config)) {
             return null;
         }
