@@ -96,22 +96,23 @@ class LDAPAuthenticator
         return $entries;
     }
 
-    public function changePassword($username, $password)
-    {
-        $userDn = $this->cfg["user_dn"];
-        $userDn = str_replace("%user%", ldap_escape($username, null, LDAP_ESCAPE_DN), $userDn);
-        $userDn = str_replace("%domain%", ldap_escape($this->cfg["domain"], null, LDAP_ESCAPE_DN), $userDn);
+//     public function changePassword($username, $password)
+//     {
+//         $userDn = $this->cfg["user_dn"];
+//         $userDn = str_replace("%user%", ldap_escape($username, null, LDAP_ESCAPE_DN), $userDn);
+//         $userDn = str_replace("%domain%", ldap_escape($this->cfg["domain"], null, LDAP_ESCAPE_DN), $userDn);
         
-        $passwordField = isset($this->cfg["password_field"]) ? $this->cfg["password_field"] : "userPassword";
+//         $passwordField = isset($this->cfg["password_field"]) ? $this->cfg["password_field"] : "userPassword";
         
-        // passwordField is "unicodePwd" on Active Directory and userPassword on most other ldap servers   
-        $hashedPassword = strtolower($passwordField) != "unicodepwd" ? LDAPUtil::hashPassword($password) : LDAPUtil::encodePasswordForActiveDirectory($password);
+//         // passwordField is "unicodePwd" on Active Directory and userPassword on most other ldap servers   
+//         $hashedPassword = strtolower($passwordField) != "unicodepwd" ? LDAPUtil::hashPassword($password) : LDAPUtil::encodePasswordForActiveDirectory($password);
         
-        $this->mainClass->debug("Change password for User: $userDn");
-        return ldap_mod_replace($this->connection, $userDn, array(
-            $passwordField => $hashedPassword
-        ));
-    }
+//         $this->mainClass->debug("Change password for User: $userDn");
+//         ldap_mod_replace($this->connection, $userDn, array(
+//             $passwordField => $hashedPassword
+//         ));
+// 		$this->mainClass->error($this->getError());
+//     }
 
     public function getError()
     {

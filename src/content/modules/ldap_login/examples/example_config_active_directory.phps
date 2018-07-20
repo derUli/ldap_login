@@ -14,7 +14,7 @@ $ldap_config = array(
         "lastname" => "sn",
         "email" => "mail"
     ],
-    "password_field" => "unicodePwd",
+    "password_field" => "userPassword",
     "create_user" => true, // create a new user if it doesn't exists
     "sync_data" => true, // Update user data from ldap on login
     "sync_passwords" => true, // Synchronize passwords
