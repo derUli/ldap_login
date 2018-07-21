@@ -5,6 +5,8 @@ class LDAPLogin extends Controller
 
     private $logger;
 
+    private $moduleName = "ldap_login";
+
     public function beforeInit()
     {
         $cfg = $this->getConfig();
@@ -21,6 +23,14 @@ class LDAPLogin extends Controller
         if ($cfg and $cfg["validate_certificate"] === false) {
             $this->debug("certificate validation is disabled");
             putenv('LDAPTLS_REQCERT=never');
+        }
+    }
+
+    public function adminFooter()
+    {
+        if (is_true($_SESSION["ldap_login"])) {
+            enqueueScriptFile(ModuleHelper::buildRessourcePath($this->moduleName, "js/edit-user.js"));
+            combinedScriptHtml();
         }
     }
 
@@ -81,6 +91,7 @@ class LDAPLogin extends Controller
                 $user = getUserByName($_POST["user"]);
                 $sessionData = $user;
                 // save original ldap to have it for login on password change.
+                $_SESSION["ldap_login"] = true;
                 $_SESSION["original_ldap_password"] = $_POST["password"];
                 // if sync_passwords is enabled. change UliCMS user password to password from LDAP
                 if (isset($cfg["sync_passwords"]) and $cfg["sync_passwords"] and $user) {
@@ -146,29 +157,32 @@ class LDAPLogin extends Controller
 
     public function afterEditUser()
     {
-        $cfg = $this->getConfig();
-        if (empty($_POST["admin_password"]) or ! (isset($cfg["sync_passwords"]) and $cfg["sync_passwords"])) {
-            return;
-        }
-        $user = new User();
-        $user->loadByUsername($_POST["admin_username"]);
-        // Now a user can only sync his own password
-        // TODO: Implement password sync on change other users passwords
-        if ($user->getId() != get_user_id()) {
-            return;
-        }
-        $authenticator = new LDAPAuthenticator($this->getConfig(), $this);
-        if ($authenticator->connect()) {
-            if ($authenticator->login($_POST["admin_username"], $_SESSION["original_ldap_password"])) {
-                $authenticator->changePassword($_POST["admin_username"], $_POST["admin_password"]);
-                $_SESSION["original_ldap_password"] = $_POST["admin_password"];
-                $this->debug("User changed his password");
-            } else {
-                if ($authenticator->getError()) {
-                    $this->error("LDAP Error: " . $authenticator->getError());
-                }
-            }
-        }
+        // disable password sync to ldap since it's buggy or doesn't work at all
+        return;
+        
+        // $cfg = $this->getConfig();
+        // if (empty($_POST["admin_password"]) or ! (isset($cfg["sync_passwords"]) and $cfg["sync_passwords"])) {
+        // return;
+        // }
+        // $user = new User();
+        // $user->loadByUsername($_POST["admin_username"]);
+        // // Now a user can only sync his own password
+        // // TODO: Implement password sync on change other users passwords
+        // if ($user->getId() != get_user_id()) {
+        // return;
+        // }
+        // $authenticator = new LDAPAuthenticator($this->getConfig(), $this);
+        // if ($authenticator->connect()) {
+        // if ($authenticator->login($_POST["admin_username"], $_SESSION["original_ldap_password"])) {
+        // $authenticator->changePassword($_POST["admin_username"], $_POST["admin_password"]);
+        // $_SESSION["original_ldap_password"] = $_POST["admin_password"];
+        // $this->debug("User changed his password");
+        // } else {
+        // if ($authenticator->getError()) {
+        // $this->error("LDAP Error: " . $authenticator->getError());
+        // }
+        // }
+        // }
     }
 
     private function getFieldMapping()
@@ -185,7 +199,7 @@ class LDAPLogin extends Controller
 
     private function getConfig()
     {
-        $cfg = new config();
+        $cfg = new CMSConfig();
         if (! isset($cfg->ldap_config)) {
             return null;
         }
