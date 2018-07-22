@@ -1,6 +1,6 @@
 {
 	"id": "ldap_login",
-	"version": "1.5",
+	"version": "1.6",
 	"description": "LDAP Integration Services for UliCMS",
 	"categories": [
 		"security"

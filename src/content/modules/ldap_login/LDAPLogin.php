@@ -15,7 +15,9 @@ class LDAPLogin extends Controller
             if (! file_exists($logPath)) {
                 mkdir($logPath, null, true);
             }
-            $this->logger = new Katzgrau\KLogger\Logger($logPath);
+            $this->logger = new Katzgrau\KLogger\Logger($logPath, Psr\Log\LogLevel::DEBUG, array(
+                "extension" => "log"
+            ));
         }
         
         // if validate_certificate is equal to false set an environment variable
@@ -153,36 +155,6 @@ class LDAPLogin extends Controller
         if ($this->logger) {
             $this->logger->error($message, $context);
         }
-    }
-
-    public function afterEditUser()
-    {
-        // disable password sync to ldap since it's buggy or doesn't work at all
-        return;
-        
-        // $cfg = $this->getConfig();
-        // if (empty($_POST["admin_password"]) or ! (isset($cfg["sync_passwords"]) and $cfg["sync_passwords"])) {
-        // return;
-        // }
-        // $user = new User();
-        // $user->loadByUsername($_POST["admin_username"]);
-        // // Now a user can only sync his own password
-        // // TODO: Implement password sync on change other users passwords
-        // if ($user->getId() != get_user_id()) {
-        // return;
-        // }
-        // $authenticator = new LDAPAuthenticator($this->getConfig(), $this);
-        // if ($authenticator->connect()) {
-        // if ($authenticator->login($_POST["admin_username"], $_SESSION["original_ldap_password"])) {
-        // $authenticator->changePassword($_POST["admin_username"], $_POST["admin_password"]);
-        // $_SESSION["original_ldap_password"] = $_POST["admin_password"];
-        // $this->debug("User changed his password");
-        // } else {
-        // if ($authenticator->getError()) {
-        // $this->error("LDAP Error: " . $authenticator->getError());
-        // }
-        // }
-        // }
     }
 
     private function getFieldMapping()
