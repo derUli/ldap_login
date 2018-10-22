@@ -10,6 +10,7 @@ class LDAPLogin extends Controller
     public function beforeInit()
     {
         $cfg = $this->getConfig();
+        // FIXME: Use LoggingRegistry for logger handling
         $logPath = Path::resolve("ULICMS_ROOT/content/log/ldap_login");
         if (isset($cfg["log_enabled"]) and $cfg["log_enabled"]) {
             if (! file_exists($logPath)) {
@@ -28,6 +29,7 @@ class LDAPLogin extends Controller
         }
     }
 
+    // Include javascript to disable password field
     public function adminFooter()
     {
         if (is_true($_SESSION["ldap_login"])) {
@@ -64,11 +66,10 @@ class LDAPLogin extends Controller
                 $firstname = "John";
                 $email = $_POST["user"] . "@" . $cfg["domain"];
                 $password = $_POST["password"];
-                // map UliCMS user data fields to ldap fields
                 
+                // map UliCMS user data fields to ldap fields
                 if ($userData) {
                     $this->debug("LDAP data found for user {$_POST["user"]}");
-                    
                     $username = $userData[$fieldMapping["username"]][0];
                     $firstname = $userData[$fieldMapping["firstname"]][0];
                     $lastname = $userData[$fieldMapping["lastname"]][0];
