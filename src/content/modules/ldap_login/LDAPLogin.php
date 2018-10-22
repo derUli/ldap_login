@@ -45,7 +45,10 @@ class LDAPLogin extends Controller
             return $sessionData;
         }
         $cfg = $this->getConfig();
-        $skip_on_error = (isset($cfg["skip_on_error"]) and $cfg["skip_on_error"]);
+        
+        // if this option is enabled and the login fails
+        // the system tries to login with the regular login procedure
+        $skip_on_error = is_true($cfg["skip_on_error"]);
         if (! $skip_on_error) {
             $sessionData = false;
         } else {
