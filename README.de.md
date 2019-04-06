@@ -30,7 +30,7 @@ Kopieren Sie das folgende Codesnippet in die Datei `cms-config.php` und passen S
 
 ```php
 <?php
-var $ldap_config = array(
+public $ldap_config = array(
     "ldap_host" => [
         "domaincontroller1.firma.de",
         "domaincontroller2.firma.de",

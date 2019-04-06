@@ -81,7 +81,16 @@ class LDAPLogin extends Controller
                 // Create user if it doesn't exists
                 if (! $user and isset($cfg["create_user"]) and $cfg["create_user"]) {
                     $this->debug("Create Account {$_POST["user"]}...");
-                    adduser($username, $lastname, $firstname, $email, $password, false);
+					
+					$user = new User();
+					$user->setUsername($username);
+					$user->setLastname($lastname);
+					$user->setFirstname($firstname);
+					$user->setEmail($email);
+					$user->setPassword($password);
+					$user->setPrimaryGroupId(Settings::get("default_acl_group") ? intval(Settings::get("default_acl_group")) : null );
+					$user->save();
+				
                     $this->debug("Account {$_POST["user"]} created");
                 } else if ($user and $userData and isset($cfg["sync_data"]) and $cfg["sync_data"]) {
                     // Sync data from LDAP to UliCMS
