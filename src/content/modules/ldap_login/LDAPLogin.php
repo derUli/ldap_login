@@ -1,4 +1,5 @@
 <?php
+use UliCMS\Security\Encryption;
 
 class LDAPLogin extends Controller
 {
