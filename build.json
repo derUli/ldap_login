@@ -1,13 +1,13 @@
 {
 	"id": "ldap_login",
-	"version": "2.0",
+	"version": "2.1",
 	"description": "LDAP Integration Services for UliCMS",
 	"categories": [
 		"security"
 	],
-	"compatible_from": "2019.3.1",
+	"compatible_from": "2020.1",
 	"dependencies": [],
-	"min_php_version" : "7.0",
+	"min_php_version" : "7.2",
 	"required_php_extensions" : [
 		"ldap"
 	]
